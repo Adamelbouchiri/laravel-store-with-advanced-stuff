@@ -54,9 +54,10 @@
                     </div>
 
                     <!-- Remove Button -->
-                    <form action="" method="POST" class="ml-4 mt-4 md:mt-0">
+                    <form action="{{ route("cart.delete", $user->id) }}" method="POST" class="ml-4 mt-4 md:mt-0">
                         @csrf
                         @method('DELETE')
+                        <input type="hidden" value="{{ $item->id }}" name="product_id">
                         <button type="submit" class="text-red-500 hover:text-red-700">Remove</button>
                     </form>
                 </div>

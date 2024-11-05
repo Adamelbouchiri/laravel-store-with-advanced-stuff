@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\cart;
+use App\Models\Product;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -76,8 +78,17 @@ class CartController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(cart $cart)
+    public function destroy(Request $request ,User $user)
     {
-        //
+        request()->validate([
+            "product_id" => "required",
+        ]);
+
+        $user = Auth::user();
+        $productId = $request->product_id;
+
+        $user->products()->detach($productId);
+
+        return back()->with("success", "Item removed Successfully");
     }
 }
