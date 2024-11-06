@@ -37,7 +37,15 @@ class CartController extends Controller
             'quantity' => 'required|integer|min:1'
         ]);
 
-        $user = Auth::user();
+        $product = Product::where('id',  $request->product_id)->first();
+
+
+        if($product) {
+            $product->stock -=  $request->quantity;
+            $product->save();
+        }
+
+        $user = User::where("id", Auth::user()->id)->first();
         $productId = $request->product_id;
         $quantity = $request->quantity;
 
@@ -84,7 +92,7 @@ class CartController extends Controller
             "product_id" => "required",
         ]);
 
-        $user = Auth::user();
+        $user = User::where("id", Auth::user()->id)->first();
         $productId = $request->product_id;
 
         $user->products()->detach($productId);
