@@ -98,7 +98,26 @@ class CartController extends Controller
 
     }
 
-    
+    public function decrease(Product $item)
+    {
+        
+        $cart = Cart::where('product_id', $item->id)
+            ->where('user_id', Auth::user()->id) // Add additional condition here
+            ->first();
+
+        $product = Product::where('id', $item->id)->first();
+        
+        if($cart) {
+            $cart->quantity -= 1;
+            $cart->save();
+
+            $product->stock += 1;
+            $product->save();
+        }
+
+        return back()->with('success', 'Quantity decreased successfully');
+
+    }
 
     /**
      * Remove the specified resource from storage.

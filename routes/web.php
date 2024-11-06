@@ -23,6 +23,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/cart', [CartController::class, "index"])->name("cart.show");
     Route::delete('/cart/destroy/{user}', [CartController::class, "destroy"])->name("cart.delete");
     Route::put('/cart/increase/{item}', [CartController::class, "increase"])->name("cart.increase");
+    Route::put('/cart/decrease/{item}', [CartController::class, "decrease"])->name("cart.decrease");
 });
 
 

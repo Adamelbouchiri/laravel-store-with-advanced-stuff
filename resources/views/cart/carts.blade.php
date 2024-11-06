@@ -40,8 +40,9 @@
                         <!-- Quantity Selector -->
                         <div class="flex items-center space-x-2">
                             <!-- Decrease quantity button -->
-                            <form action="" method="POST">
+                            <form action="{{ route('cart.decrease', $item->id) }}" method="POST">
                                 @csrf
+                                @method('PUT')
                                 <button type="submit" class="px-3 py-1 bg-gray-700 text-gray-300 rounded-lg hover:bg-gray-600">-</button>
                             </form>
 
