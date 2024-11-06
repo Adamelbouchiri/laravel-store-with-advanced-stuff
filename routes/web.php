@@ -22,6 +22,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/cart/store', [CartController::class, "store"])->name("cart.store");
     Route::get('/cart', [CartController::class, "index"])->name("cart.show");
     Route::delete('/cart/destroy/{user}', [CartController::class, "destroy"])->name("cart.delete");
+    Route::put('/cart/increase/{item}', [CartController::class, "increase"])->name("cart.increase");
 });
 
 

@@ -14,4 +14,9 @@ class Product extends Model
         "stock",
         "description",
     ];
+
+    public function carts()
+    {
+        return $this->belongsToMany(Cart::class, 'carts')->withPivot('quantity'); // Include any extra pivot columns here
+    }
 }

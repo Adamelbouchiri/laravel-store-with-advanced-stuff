@@ -78,10 +78,27 @@ class CartController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, cart $cart)
+    public function increase(Product $item)
     {
-        //
+        $cart = Cart::where('product_id', $item->id)
+            ->where('user_id', Auth::user()->id) // Add additional condition here
+            ->first();
+
+        $product = Product::where('id', $item->id)->first();
+        
+        if($cart) {
+            $cart->quantity += 1;
+            $cart->save();
+
+            $product->stock -= 1;
+            $product->save();
+        }
+
+        return back()->with('success', 'Quantity increased successfully');
+
     }
+
+    
 
     /**
      * Remove the specified resource from storage.

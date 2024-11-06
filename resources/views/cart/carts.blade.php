@@ -11,6 +11,12 @@
 <div class="container mx-auto p-4 bg-[#111827]">
     <h2 class="text-2xl font-semibold mb-6 text-white">Shopping Cart</h2>
 
+    @if(session('success'))
+            <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-4" role="alert">
+                <span class="block sm:inline">{{ session('success') }}</span>
+            </div>
+        @endif
+
     <!-- Cart Items List -->
     @if($user->products->isEmpty())
         <p class="text-gray-400">Your cart is currently empty.</p>
@@ -43,8 +49,9 @@
                             <input type="number" value="{{ $item->pivot->quantity }}" min="1" class="w-12 text-center border border-gray-600 bg-gray-900 text-gray-200 rounded-lg" readonly>
 
                             <!-- Increase quantity button -->
-                            <form action="" method="POST">
+                            <form action="{{ route('cart.increase', $item->id) }}" method="POST">
                                 @csrf
+                                @method('PUT')
                                 <button type="submit" class="px-3 py-1 bg-gray-700 text-gray-300 rounded-lg hover:bg-gray-600">+</button>
                             </form>
                         </div>
