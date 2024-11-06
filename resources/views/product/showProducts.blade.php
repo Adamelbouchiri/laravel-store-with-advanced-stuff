@@ -52,6 +52,17 @@
                         Add to Cart
                     </button>
                 </form>
+
+                @checkRole("admin")
+                <form action="{{ route('product.delete', $product->id) }}" method="POST">
+                    @csrf
+                    @method('DELETE')
+                    
+                    <button type="submit" class="mt-4 w-full bg-red-600 hover:bg-red-700 text-white font-semibold py-2 rounded-lg transition-colors duration-200">
+                        Delete product
+                    </button>
+                </form>
+                @endCheckRole
             </div>
         @endforeach
     </div>

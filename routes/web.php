@@ -30,6 +30,7 @@ Route::middleware('auth')->group(function () {
 Route::middleware(['auth', "role:admin,moderator"])->group(function () {
     Route::get('/product/create', [ProductController::class, "index"])->name("product.create");
     Route::post('/product/store', [ProductController::class, "store"])->name("product.store");
+    Route::delete('/product/destroy/{product}', [ProductController::class, "destroy"])->name("product.delete");
     Route::get('/users', [usersController::class, "index"])->name("users.show");
     
 });
