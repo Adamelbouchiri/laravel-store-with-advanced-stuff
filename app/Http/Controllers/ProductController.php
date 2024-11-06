@@ -38,6 +38,7 @@ class ProductController extends Controller
             "image" => "required|mimes:png,jpg,jpeg|max:10280",
             "title" => "required",
             "price" => "required|integer",
+            "stock" => "required|integer|min:1",
             "description" => "required",
         ]);
         
@@ -51,6 +52,7 @@ class ProductController extends Controller
             "image" => $fileName,
             "title" => $request->title,
             "price" => $request->price,
+            "stock" => $request->stock,
             "description" => $request->description,
         ]);
 

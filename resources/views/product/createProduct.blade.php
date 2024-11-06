@@ -43,6 +43,13 @@
                     class="mt-1 w-full p-2 border border-gray-500 rounded-lg bg-[#1f2937] text-white focus:outline-none focus:ring-2 focus:ring-gray-400">
             </div>
 
+            <!-- Stock Input -->
+            <div>
+                <label for="stock" class="block text-gray-300 font-semibold">Stock</label>
+                <input type="number" name="stock" id="stock" step="0.01" required
+                    class="mt-1 w-full p-2 border border-gray-500 rounded-lg bg-[#1f2937] text-white focus:outline-none focus:ring-2 focus:ring-gray-400">
+            </div>
+
             <!-- Description Input -->
             <div>
                 <label for="description" class="block text-gray-300 font-semibold">Description</label>

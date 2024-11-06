@@ -33,6 +33,8 @@
                     <span class="text-xl font-bold text-green-400">${{ $product->price }}</span>
                 </div>
 
+                <p class="text-lg font-bold text-gray-400 mb-2">stock : {{ $product->stock }}</p>
+
                 <!-- Product Description -->
                 <p class="text-gray-400 text-sm mb-4">{{ Str::limit($product->description, 100) }}</p>
 
