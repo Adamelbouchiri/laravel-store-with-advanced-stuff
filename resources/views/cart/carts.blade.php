@@ -58,6 +58,7 @@
                         @csrf
                         @method('DELETE')
                         <input type="hidden" value="{{ $item->id }}" name="product_id">
+                        <input type="hidden" value="{{ $item->pivot->quantity }}" name="quantity">
                         <button type="submit" class="text-red-500 hover:text-red-700">Remove</button>
                     </form>
                 </div>

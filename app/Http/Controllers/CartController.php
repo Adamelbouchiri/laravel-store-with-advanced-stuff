@@ -90,7 +90,16 @@ class CartController extends Controller
     {
         request()->validate([
             "product_id" => "required",
+            "quantity" => "required",
         ]);
+
+        $product = Product::where('id',  $request->product_id)->first();
+
+
+        if($product) {
+            $product->stock +=  $request->quantity;
+            $product->save();
+        }
 
         $user = User::where("id", Auth::user()->id)->first();
         $productId = $request->product_id;
