@@ -97,9 +97,9 @@
             </div>
 
             <!-- Checkout Button -->
-            <button class="mt-6 w-full bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700">
+            <a href="{{ route('cart.pay') }}" class="block text-center mt-6 w-full bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700">
                 Proceed to Checkout
-            </button>
+            </a>
         </div>
     @endif
 </div>

@@ -7,6 +7,8 @@ use App\Models\Product;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Stripe\Checkout\Session;
+use Stripe\Stripe;
 
 class CartController extends Controller
 {
@@ -143,5 +145,44 @@ class CartController extends Controller
         $user->products()->detach($productId);
 
         return back()->with("success", "Item removed Successfully");
+    }
+
+    public function pay() {
+
+        $carts = cart::where("user_id", Auth::user()->id)->get();
+        $total = 0;
+        $products = [];
+
+        foreach ($carts as $cart) {
+            $product = Product::where('id', $cart->product_id)->first();
+            $total += $product->price * $cart->quantity;
+            $products[] = $product;
+        }
+
+        dd($total);
+        
+        Stripe::setApiKey(config('stripe.sk'));
+        
+        $session = Session::create([
+            'line_items'  => [
+                [
+                    'price_data' => [
+                        'currency'     => 'usd',
+                        'product_data' => [
+                            "name" => "LionsGeek Product",
+                            "description"=> "nyehehehehe"
+                        ],
+                        'unit_amount'  => 6900,
+                    ],
+                    'quantity'   => 2,
+                ],
+
+            ],
+            'mode'        => 'payment', // the mode  of payment
+            'success_url' => route('dashboard'), // route when success 
+            'cancel_url'  => route('dashboard'), // route when  failed or canceled
+        ]);
+
+        return redirect()->away($session->url);
     }
 }
