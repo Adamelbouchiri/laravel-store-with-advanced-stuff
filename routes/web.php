@@ -25,6 +25,7 @@ Route::middleware('auth')->group(function () {
     Route::put('/cart/increase/{item}', [CartController::class, "increase"])->name("cart.increase");
     Route::put('/cart/decrease/{item}', [CartController::class, "decrease"])->name("cart.decrease");
     Route::get('/cart/pay', [CartController::class, "pay"])->name("cart.pay");
+    Route::get('/home', [ProductController::class, "showProductsPaginate"])->name("showProducts.Paginate");
 });
 
 

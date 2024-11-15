@@ -5,12 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Users List</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    @vite("resources/css/app.css")
+    @vite(["resources/css/app.css", "resources/js/app.js"])
 </head>
 <body class="bg-gray-900">
-
+@include('layouts.navigation')
 <div class="container mx-auto p-6">
-    <h1 class="text-3xl font-bold mb-6 text-center text-gray-100">User List</h1>
+    <h1 class="text-3xl font-bold mb-6 text-center text-gray-100">Trashed Users List</h1>
     
     @if(session('success'))
         <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-4" role="alert">

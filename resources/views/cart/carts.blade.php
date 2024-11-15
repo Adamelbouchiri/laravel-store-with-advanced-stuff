@@ -5,21 +5,28 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>cart</title>
-    @vite('resources/css/app.css')
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body class="bg-[#111827]">
+    @include('layouts.navigation')
 <div class="container mx-auto p-4 bg-[#111827]">
     <h2 class="text-2xl font-semibold mb-6 text-white">Shopping Cart</h2>
 
     @if(session('success'))
-            <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-4" role="alert">
-                <span class="block sm:inline">{{ session('success') }}</span>
-            </div>
-        @endif
+        <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-4" role="alert">
+            <span class="block sm:inline">{{ session('success') }}</span>
+        </div>
+    @endif
+
+    @if(session('error'))
+        <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4" role="alert">
+            <span class="block sm:inline">{{ session('error') }}</span>
+        </div>
+    @endif
 
     <!-- Cart Items List -->
     @if($user->products->isEmpty())
-        <p class="text-gray-400">Your cart is currently empty.</p>
+        <p class="text-gray-400 text-xl">Your cart is currently empty.</p>
     @else
 
         <div class="space-y-4">
@@ -31,7 +38,7 @@
 
                     <!-- Product Details -->
                     <div class="flex-1 ml-4">
-                        <h3 class="text-lg font-semibold text-white">{{ $item->name }}</h3>
+                        <h3 class="text-lg font-semibold text-white">{{ $item->title }}</h3>
                         <p class="text-gray-400 mt-1">{{ $item->description }}</p>
                     </div>
 

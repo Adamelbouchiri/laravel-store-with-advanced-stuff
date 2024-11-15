@@ -109,12 +109,14 @@ class CartController extends Controller
 
         $product = Product::where('id', $item->id)->first();
         
-        if($cart) {
+        if($cart && ($cart->quantity >= 2)) {
             $cart->quantity -= 1;
             $cart->save();
 
             $product->stock += 1;
             $product->save();
+        }else {
+            return back()->with('error', 'You can not decrease quantity below 2');
         }
 
         return back()->with('success', 'Quantity decreased successfully');
@@ -150,38 +152,47 @@ class CartController extends Controller
     public function pay() {
 
         $carts = cart::where("user_id", Auth::user()->id)->get();
-        $total = 0;
+        $total = 8.5;
         $products = [];
 
         foreach ($carts as $cart) {
             $product = Product::where('id', $cart->product_id)->first();
             $total += $product->price * $cart->quantity;
+
             $products[] = $product;
         }
 
-        dd($total);
+        $line_items = [];
+
+        foreach ($products as $product) {
+            $cart = cart::where('product_id', $product->id)->where('user_id', Auth::user()->id)->first();
+            $line_items[] = [
+                'price_data' => [
+                'currency' => 'usd',
+                'product_data' => [
+                "name" => $product->title,
+                "description" => $product->description,
+                ],
+                'unit_amount' => $product->price * 100,
+                // 'recurring' => [
+                //         'interval' => 'month',
+                //     ],
+            ],
+            'quantity' => $cart->quantity,
+        ];
+    }
         
         Stripe::setApiKey(config('stripe.sk'));
         
         $session = Session::create([
-            'line_items'  => [
-                [
-                    'price_data' => [
-                        'currency'     => 'usd',
-                        'product_data' => [
-                            "name" => "LionsGeek Product",
-                            "description"=> "nyehehehehe"
-                        ],
-                        'unit_amount'  => 6900,
-                    ],
-                    'quantity'   => 2,
-                ],
-
-            ],
+            'line_items'  => $line_items,
             'mode'        => 'payment', // the mode  of payment
+            // 'mode'        => 'subscription', // the mode  of payment
             'success_url' => route('dashboard'), // route when success 
             'cancel_url'  => route('dashboard'), // route when  failed or canceled
         ]);
+
+        $total = 8.5;
 
         return redirect()->away($session->url);
     }
